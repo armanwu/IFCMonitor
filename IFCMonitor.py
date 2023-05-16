@@ -17,7 +17,7 @@ def main():
     root = tk.Tk()
     root.title("IFC Monitor")
 
-    load_button = tk.Button(root, text="Load IFC File", command=load_ifc_file)
+    load_button = tk.Button(root, text="Load IFC", command=load_ifc_file)
     load_button.pack()
 
     root.mainloop()
