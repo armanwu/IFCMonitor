@@ -4,7 +4,8 @@ import ifcopenshell
 import os
 from collections import Counter
 
-def load_ifc_file():
+
+def load_ifc_file(root, properties_text):
     filepath = filedialog.askopenfilename(filetypes=[("IFC Files", "*.ifc")])
 
     if filepath:
@@ -20,8 +21,30 @@ def load_ifc_file():
             display_text = f"{entity_type}: {entity_name} ({count})"
             entity_listbox.insert(tk.END, display_text)
 
+        def on_entity_selected(event):
+            selected_index = entity_listbox.curselection()
+            if selected_index:
+                entity = entities[selected_index[0]]
+                properties = entity.get_info()
+        
+                # Clear previous content
+                properties_text.delete("1.0", tk.END)
+        
+                # Format and display properties
+                formatted_properties = format_properties(properties)
+                properties_text.insert(tk.END, formatted_properties)
+
+        def format_properties(properties):
+            formatted_properties = ""
+            for key, value in properties.items():
+                formatted_properties += f"{key}: {value}\n"
+            return formatted_properties
+
+        entity_listbox.bind("<<ListboxSelect>>", on_entity_selected)
+        
         filename = os.path.basename(filepath)
         filename_label.config(text=f"Selected File: {filename}")
+
 
 
 def main():
@@ -30,17 +53,20 @@ def main():
     root = tk.Tk()
     root.title("IFC Monitor")
 
-    root.geometry("500x500")
+    root.geometry("700x700")
     root.resizable(0, 0)
 
     filename_label = tk.Label(root, text="Selected File: ")
     filename_label.pack(pady=10)
 
-    entity_listbox = tk.Listbox(root, height=20, width=60)
+    load_button = tk.Button(root, text="Load IFC", command=lambda: load_ifc_file(root, properties_text))
+    load_button.pack()
+
+    entity_listbox = tk.Listbox(root, height=20, width=80)
     entity_listbox.pack(pady=10)
 
-    load_button = tk.Button(root, text="Load IFC", command=load_ifc_file)
-    load_button.pack()
+    properties_text = tk.Text(root, height=12, width=80)
+    properties_text.pack(pady=10)
 
     root.mainloop()
 
