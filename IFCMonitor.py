@@ -13,10 +13,8 @@ def load_ifc_file():
         entity_names = [entity.is_a() for entity in entities]
         entity_counts = Counter(entity_names)
 
-        # Clear the listbox
         entity_listbox.delete(0, tk.END)
 
-        # Insert entity names and counts into the listbox
         for name, count in entity_counts.items():
             display_text = f"{name} ({count})"
             entity_listbox.insert(tk.END, display_text)
@@ -28,11 +26,17 @@ def main():
     root = tk.Tk()
     root.title("IFC Monitor")
 
-    load_button = tk.Button(root, text="Load IFC", command=load_ifc_file)
-    load_button.pack()
+    root.geometry("400x500")
+    root.resizable(0, 0)
+
+    filename_label = tk.Label(root, text="Selected File: ")
+    filename_label.pack(pady=10)
 
     entity_listbox = tk.Listbox(root, height=20, width=50)
-    entity_listbox.pack()
+    entity_listbox.pack(pady=10)
+
+    load_button = tk.Button(root, text="Load IFC", command=load_ifc_file)
+    load_button.pack()
 
     root.mainloop()
 
