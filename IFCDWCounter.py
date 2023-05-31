@@ -53,7 +53,7 @@ def open_file_dialog():
 
 # Create the main window
 window = tk.Tk()
-window.title("IFC Door and Window Counter")
+window.title("IFC Door Window Counter")
 window.geometry("500x400")
 window.resizable(False, False)
 
