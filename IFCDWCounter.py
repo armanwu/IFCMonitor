@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import filedialog
 from tabulate import tabulate
@@ -52,7 +53,7 @@ def open_file_dialog():
     result_textbox.insert(tk.END, result_text)
     
     # Display the file name
-    file_name_label.config(text="File: " + file_path)
+    file_name_label.config(text="File: " + os.path.basename(file_path))
 
 # Create the main window
 window = tk.Tk()
