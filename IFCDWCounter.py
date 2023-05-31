@@ -1,4 +1,3 @@
-import os
 import tkinter as tk
 from tkinter import filedialog
 from tabulate import tabulate
@@ -51,9 +50,6 @@ def open_file_dialog():
     # Display the result
     result_textbox.delete(1.0, tk.END)  # Clear the textbox
     result_textbox.insert(tk.END, result_text)
-    
-    # Display the file name
-    file_name_label.config(text="File: " + os.path.basename(file_path))
 
 # Create the main window
 window = tk.Tk()
@@ -64,10 +60,6 @@ window.resizable(False, False)
 # Create the "Open File" button
 open_button = tk.Button(window, text="Open File", command=open_file_dialog, width=15)
 open_button.pack(pady=20)
-
-# Create a label to display the file name
-file_name_label = tk.Label(window, font=("Arial", 10))
-file_name_label.pack()
 
 # Create a textbox to display the result
 result_textbox = tk.Text(window, font=("Courier New", 10), height=15, width=50)
