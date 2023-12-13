@@ -29,36 +29,30 @@ class IFCViewer:
             self.show_error_message("Invalid IFC file.")
             return
 
-        # Initialize dictionaries to store counts based on levels
         floor_count_by_level = {}
         wall_count_by_level = {}
         column_count_by_level = {}
         door_count_by_level = {}
 
-        # Iterate through IfcBuildingStorey objects and count floors
         for floor in model.by_type("IfcBuildingStorey"):
             level_name = floor.get_info()["Name"]
             floor_count_by_level[level_name] = floor_count_by_level.get(level_name, 0) + 1
 
-        # Iterate through IfcWall objects and count walls
         for wall in model.by_type("IfcWall"):
             if wall.ContainedInStructure:
                 associated_levels = wall.ContainedInStructure[0].RelatingStructure.Name
                 wall_count_by_level[associated_levels] = wall_count_by_level.get(associated_levels, 0) + 1
 
-        # Iterate through IfcColumn objects and count columns
         for column in model.by_type("IfcColumn"):
             if column.ContainedInStructure:
                 associated_levels = column.ContainedInStructure[0].RelatingStructure.Name
                 column_count_by_level[associated_levels] = column_count_by_level.get(associated_levels, 0) + 1
 
-        # Iterate through IfcDoor objects and count doors
         for door in model.by_type("IfcDoor"):
             if door.ContainedInStructure:
                 associated_levels = door.ContainedInStructure[0].RelatingStructure.Name
                 door_count_by_level[associated_levels] = door_count_by_level.get(associated_levels, 0) + 1
 
-        # Display information in the text box
         info_text = "Floor Count Based on Level:\n"
         for level, count in floor_count_by_level.items():
             info_text += f"{level}: {count}\n"
